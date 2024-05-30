@@ -245,14 +245,16 @@ async function handleInput(e) {
 
   grid.cells.forEach((cell) => cell.mergeTiles());
 
-  const newTile = new Tile(gameBoard);
+  if (grid._emptyCells.length) {
+    const newTile = new Tile(gameBoard);
 
-  grid.randomEmptyCell().tile = newTile;
+    grid.randomEmptyCell().tile = newTile;
 
-  if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
-    newTile.waitForTransition(true).then(() => loseGame());
+    if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+      newTile.waitForTransition(true).then(() => loseGame());
 
-    return;
+      return;
+    }
   }
 
   setupInput();
